@@ -4,8 +4,6 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-# LOGIN = ''
-# PASSWORD = ''
 CONFIG_FILE = open('static/config.json').read()
 
 class VKLogin():
@@ -32,4 +30,4 @@ class VKLogin():
 
         submit = driver.find_element_by_class_name('oauth_button')
         submit.click()
-        time.sleep(10)
+        return driver
