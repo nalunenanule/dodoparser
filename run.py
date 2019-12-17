@@ -1,5 +1,4 @@
-from app.login import VKLogin
+from app.getpizzaslist import GetPizzeriaList
 
 if __name__ == "__main__":
-    start = VKLogin()
-    start.set_connection()
+    GetPizzeriaList().get_pizzerias_list()

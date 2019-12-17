@@ -1,5 +1,4 @@
 import json
-import time
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -15,7 +14,6 @@ class VKLogin():
         return json.loads(CONFIG_FILE)['password']
 
     def set_connection(self):
-        # Добавить проверку на "Залогиненность"
         driver = webdriver.Chrome('static/chromedriver')
         driver.get('https://lk.dodocontrol.ru/login')
 
@@ -30,4 +28,5 @@ class VKLogin():
 
         submit = driver.find_element_by_class_name('oauth_button')
         submit.click()
+
         return driver
