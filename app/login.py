@@ -14,7 +14,10 @@ class VKLogin():
         return json.loads(CONFIG_FILE)['password']
 
     def set_connection(self):
-        driver = webdriver.Chrome('static/chromedriver')
+        options = webdriver.ChromeOptions()
+        options.add_argument('headless')
+        
+        driver = webdriver.Chrome('static/chromedriver', chrome_options=options)
         driver.get('https://lk.dodocontrol.ru/login')
 
         login_elem = driver.find_element_by_class_name('login-form__btn')
