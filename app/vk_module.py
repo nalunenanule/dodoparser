@@ -3,16 +3,20 @@ import json
 import vk_api
 from vk_api.utils import get_random_id
 
+from app.login import VKLogin
+
 TOKEN = json.loads(open('static/config.json').read())['token']
 
 class SendMessageToVk():
 
+    def __init__(self):
+        self.vk_session = vk_api.VkApi(token=TOKEN)
+        self.vk = self.vk_session.get_api()
+
     def send_message(self, inspection_list):
-        vk_session = vk_api.VkApi(token=TOKEN)
-        vk = vk_session.get_api()
-        vk.messages.send(
+        self.vk.messages.send(
             message=inspection_list,
             random_id=get_random_id(),
-            peer_id=16483527
+            peer_id=240944782
         )
         return 'ok'

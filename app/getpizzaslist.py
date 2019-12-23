@@ -21,7 +21,6 @@ class GetPizzeriaList():
 
     def _get_available_inspection(self, pizzerias_data_list):
         for elem in pizzerias_data_list:
-            # result = re.findall('Нет свободных дат', elem.text) Вариант через регулярные выражения
             result = (elem.text).count('Нет свободных дат')
             if result != 3:
                 self.main_list.append(elem.text)
@@ -30,3 +29,5 @@ class GetPizzeriaList():
             return self.main_list
         
         return ['Нет свободных проверок']
+
+        
