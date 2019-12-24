@@ -14,6 +14,7 @@ class SendMessageToVk():
         self.vk = self.vk_session.get_api()
 
     def send_message(self, inspection_list):
+        print(inspection_list)
         self.vk.messages.send(
             message=inspection_list,
             random_id=get_random_id(),

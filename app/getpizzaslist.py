@@ -1,33 +1,22 @@
-import re
+import time
 
-from selenium.webdriver.support.wait import WebDriverWait
 from app.login import VKLogin
+from selenium.webdriver.support import expected_conditions as ec
 
 class GetPizzeriaList():
 
     def __init__(self):
         self.driver = VKLogin().set_connection()
-        self.main_list = []
 
-    def start(self):
-        return self._get_pizzeria_data()
+    def get_available_inspection(self):
+        # Костыль
+        time.sleep(5)
+        self.driver.get('https://lk.dodocontrol.ru/api/personalarea/checkRequests/GetCheckOptions')
+        pizzerias_data_list = self.driver.find_element_by_tag_name('pre')
 
-    def _get_pizzeria_data(self):
-        WebDriverWait(self.driver, 100).until(
-            lambda is_element_available: self.driver.find_element_by_class_name('pizzeria__list'))
-        
-        pizzerias_data_list = self.driver.find_elements_by_class_name('pizzeria__list')
-        return self._get_available_inspection(pizzerias_data_list)
+        if len(pizzerias_data_list.text) != 0:
+            return pizzerias_data_list.text
 
-    def _get_available_inspection(self, pizzerias_data_list):
-        for elem in pizzerias_data_list:
-            result = (elem.text).count('Нет свободных дат')
-            if result != 3:
-                self.main_list.append(elem.text)
-
-        if len(self.main_list) != 0:
-            return self.main_list
-        
-        return ['Нет свободных проверок']
+        return 'Нет свободных проверок'
 
         
