@@ -9,6 +9,8 @@ def actions_with_insperction_list():
 if __name__ == "__main__":
     actions_with_insperction_list()
 
+# Метод get_available_inspection ничего не возвращает, исправить!
+# Добавить формирование строк с проверками    
 # Распарсить list, оставить только доступные проверки
 
 # Делать проверку по запросу и по времени 

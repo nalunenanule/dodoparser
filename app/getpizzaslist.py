@@ -12,7 +12,6 @@ class GetPizzeriaList():
         self.driver = VKLogin().set_connection()
 
     def get_available_inspection(self):
-        # Метод ничего не возвращает, исправить!
         WebDriverWait(self.driver, 15).until(ec.url_changes(self.driver.current_url))
         
         self.driver.get('https://lk.dodocontrol.ru/api/personalarea/checkRequests/GetCheckOptions')
