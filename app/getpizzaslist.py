@@ -10,6 +10,7 @@ class GetPizzeriaList():
 
     def __init__(self):
         self.driver = VKLogin().set_connection()
+        self.p_list = []
 
     def get_available_inspection(self):
         WebDriverWait(self.driver, 15).until(ec.url_changes(self.driver.current_url))
@@ -27,16 +28,15 @@ class GetPizzeriaList():
             parsed_insperction_alias = inspection['unit']['alias']
             parsed_insperction_address = inspection['unit']['address']
             parsed_insperction_check_type = inspection['checkType']
-            parsed_insperction_check_date = datetime.strptime(inspection['date'], '%Y-%m-%dT%H:%M:%S')
+            parsed_insperction_check_date = datetime.date(datetime.strptime(inspection['date'], '%Y-%m-%dT%H:%M:%S'))
 
             if (parsed_insperction_check_type == 0):
                 parsed_insperction_check_type = 'Доставка'
             else: parsed_insperction_check_type = 'Ресторан'
 
-            print(f'Город: {parsed_insperction_city}, Название: {parsed_insperction_alias}, Адрес: {parsed_insperction_address}, Тип: {parsed_insperction_check_type}, Дата: {parsed_insperction_check_date}')
+            self.p_list.append(f'Город: {parsed_insperction_city}, Название: {parsed_insperction_alias}, Адрес: {parsed_insperction_address}, Тип: {parsed_insperction_check_type}, Дата: {parsed_insperction_check_date}\n\n')
 
-        if len(pizzerias_data_list.text) != 0:
-            return parsed_insperction_city
+        return (''.join(self.p_list))
 
     def get_user_vk_id(self):
         WebDriverWait(self.driver, 15).until(ec.url_changes(self.driver.current_url))
