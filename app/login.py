@@ -6,7 +6,7 @@ from selenium.webdriver.common.keys import Keys
 CONFIG_FILE = open('static/config.json').read()
 
 class VKLogin():
-
+    '''Класс осуществляющий вход в личный кабинет через ВКонтакте'''
     def __init__(self):
         self.options = webdriver.ChromeOptions()
         self.options.add_argument('headless')

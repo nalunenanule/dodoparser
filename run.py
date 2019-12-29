@@ -1,19 +1,22 @@
-from app.getpizzaslist import GetPizzeriaList
+from flask import Flask, request
+
+from app.getpizzaslist import GetPizzeriaList, AvailibleInspections
 from app.vk_module import SendMessageToVk
 
+app = Flask(__name__)
+
+@app.route('/', methods=['GET'])
 def actions_with_insperction_list():
-    inspections = GetPizzeriaList().get_available_inspection()
-    user_id = GetPizzeriaList().get_user_vk_id()
-    SendMessageToVk().send_message(inspections, user_id)
-
-if __name__ == "__main__":
-    actions_with_insperction_list()
-
-# Реализовать добавление полученных данных в уже подготовленный list (Прим.: Город:...)
-# Метод get_available_inspection ничего не возвращает, исправить!
-# Добавить формирование строк с проверками    
+    data = request.get_json()
+    if data['type'] == 'message_new':
+        if data['object']['text'] == 'Доступные проверки':
+            GetPizzeriaList()
+            all_inspections = AvailibleInspections()
+            SendMessageToVk().send_message(all_inspections.inspections, all_inspections.user_vk_id)
+    return 'ok'
+    
+if __name__ == '__main__':
+    app.run()
 
 # Делать проверку по запросу и по времени 
 # Сделать интеграцию с Discord (Возможно Docker)
-# Отпавлять сообщение текущему пользователю, передавать из Selenium
-# Разобраться с токеном и использованием сообщений группы (Вопрос ! своя группа или отдельная для каждого пользователя)
