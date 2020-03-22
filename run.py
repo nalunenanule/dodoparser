@@ -17,8 +17,8 @@ def actions_with_insperction_list():
         return confirmation_code
 
     elif data['type'] == 'message_new':
-        if data['text'] == 'Доступные проверки':
-            GetPizzeriaList()
+        if data['object']['body'] == 'Доступные проверки':
+            pizzeria_list = GetPizzeriaList()
             all_inspections = AvailibleInspections()
             SendMessageToVk().send_message(all_inspections.inspections, all_inspections.user_vk_id)
     return 'ok'
@@ -27,4 +27,6 @@ if __name__ == '__main__':
     app.run()
 
 # Делать проверку по запросу и по времени 
-# Сделать интеграцию с Discord (Возможно Docker)
+# Сделать интеграцию с Discord
+# Docker
+# сервис только записывает в БД, основной сервис на node показывает данные из БД

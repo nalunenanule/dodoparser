@@ -19,10 +19,7 @@ class VKLogin():
         return json.loads(CONFIG_FILE)['password']
 
     def set_connection(self):
-        self.driver.get('https://lk.dodocontrol.ru/login')
-
-        login_elem = self.driver.find_element_by_class_name('login-form__btn')
-        login_elem.send_keys(Keys.ENTER)
+        self.driver.get('https://oauth.vk.com/authorize?client_id=6342119&display=page&redirect_uri=https://lk.dodocontrol.ru/login&response_type=code&v=5.71')
 
         email_field = self.driver.find_element_by_name('email')
         email_field.send_keys(self._get_login())
