@@ -2,6 +2,7 @@ import json
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from webdriver_manager.chrome import ChromeDriverManager
 
 CONFIG_FILE = open('static/config.json').read()
 
@@ -10,7 +11,7 @@ class VKLogin():
     def __init__(self):
         self.options = webdriver.ChromeOptions()
         self.options.add_argument('headless')
-        self.driver = webdriver.Chrome('static/chromedriver', chrome_options=self.options)
+        self.driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=self.options)
 
     def _get_login(self):
         return json.loads(CONFIG_FILE)['login']
