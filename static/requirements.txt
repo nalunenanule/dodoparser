@@ -1,3 +1,5 @@
-vk_api
 selenium
-Flask
+chromedriver-binary
+pymongo
+Twisted
+webdriver_manager
