@@ -1,8 +1,10 @@
 import re
 import json
+import random
 import logging
 import pymongo
 from pymongo import MongoClient
+from time import sleep
 
 from app.login import VKLogin
 from selenium.webdriver.support import expected_conditions as ec
@@ -31,7 +33,14 @@ class GetPizzeriaList():
         self._get_available_inspection()
 
     def _get_available_inspection(self):
-        WebDriverWait(self.driver, 30).until(ec.url_changes(self.driver.current_url))
+        try:
+            logger.info('inspection driver...')
+            WebDriverWait(self.driver, 30).until(ec.url_changes(self.driver.current_url))
+            logger.info('inspection driver ready')
+        except:
+            logger.info('inspection driver error')
+            sleep(random.randint(60*15, 60*30))
+            self._get_available_inspection()
         
         self.driver.get('https://lk.dodocontrol.ru/api/personalarea/checkRequests/GetCheckOptions')
         pizzerias_data_list = self.driver.find_element_by_tag_name('pre')

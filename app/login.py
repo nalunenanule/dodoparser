@@ -1,5 +1,7 @@
 import json
+import random
 import logging
+from time import sleep
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -25,8 +27,15 @@ class VKLogin():
         return json.loads(CONFIG_FILE)['password']
 
     def set_connection(self):
-        self.driver.get('https://oauth.vk.com/authorize?client_id=6342119&display=page&redirect_uri=https://lk.dodocontrol.ru/login&response_type=code&v=5.71')
-
+        try:
+            logger.info('vk auth...')
+            self.driver.get('https://oauth.vk.com/authorize?client_id=6342119&display=page&redirect_uri=https://lk.dodocontrol.ru/login&response_type=code&v=5.71')
+            logger.info('vk auth driver ready')
+        except:
+            logger.info('vk auth driver error')
+            sleep(random.randint(60*15, 60*30))
+            self.set_connection()
+        
         email_field = self.driver.find_element_by_name('email')
         email_field.send_keys(self._get_login())
 
@@ -36,7 +45,7 @@ class VKLogin():
         submit = self.driver.find_element_by_class_name('oauth_button')
         submit.click()
 
-        logger.info('vk auth')
+        logger.info('vk auth ready')
 
         return self.driver
 
